@@ -57,11 +57,6 @@ $ heroku config:set LINE_CHANNEL_SECRET=*****
 $ heroku config:set LINE_CHANNEL_TOKEN=*****
 ```
 
-7. シークレット情報の変更をherokuに反映させる。
-```
-$ git push heroku master
-```
-
 # LINE Developerコンソールの設定
 LINE DeveloperコンソールのChannel基本設定から、以下を設定。
 
@@ -72,6 +67,17 @@ LINE DeveloperコンソールのChannel基本設定から、以下を設定。
 - 友だち追加時あいさつ: 利用する
 
 ※Webhook URLの `https://XXXXX.herokuapp.com` には `heroku create` で生成されたURLを指定する。Webhook URLを設定した後に接続確認ボタンを押して成功したら疎通完了。
+
+# Q&A
+## Q. herokuのログが見たい
+```
+$ heroku logs --tail
+```
+
+## Q. masterブランチ以外をherokuにデプロイしたい
+```
+$ git push heroku feature/xxxxx:master -f
+```
 
 # 参考
 ローカル環境構築は[こちら](https://github.com/giftee/intern-line-bot/wiki/%E3%83%AD%E3%83%BC%E3%82%AB%E3%83%AB%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89)
