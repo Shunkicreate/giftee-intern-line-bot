@@ -21,10 +21,7 @@ git clone git@github.com:giftee/intern-line-bot.git
 2. Herokuにログインする。
 ```
 $ heroku login
-Enter your Heroku credentials:
-Email: ************
-Password: ************
-Logged in as ************
+heroku: Press any key to open up the browser to login or q to exit:
 ```
 
 3. heroku上にアプリを作成する。
