@@ -6,7 +6,7 @@
 # 環境
 ```
 $ ruby -v
-ruby 2.4.0p0 (2016-12-24 revision 57164) [x86_64-darwin16]
+ruby 2.7.0p0 (2019-12-25 revision 647ee6f091) [x86_64-darwin19]
 
 $ bundle exec rails -v
 Rails 5.1.4
