@@ -40,3 +40,7 @@ gem 'sinatra'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+gem 'bootsnap', require: false
+
+gem 'listen', group: :development
