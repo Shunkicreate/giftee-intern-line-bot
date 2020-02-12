@@ -175,7 +175,7 @@ DEPENDENCIES
   line-bot-api
   pg (~> 0.18)
   puma
-  rails
+  rails (~> 5.2.3)
   rails_12factor
   sass-rails
   sdoc
