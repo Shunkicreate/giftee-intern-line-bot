@@ -9,7 +9,7 @@ $ ruby -v
 ruby 2.7.0p0 (2019-12-25 revision 647ee6f091) [x86_64-darwin19]
 
 $ bundle exec rails -v
-Rails 5.1.4
+Rails 5.2.3
 ```
 
 # Webhook環境の構築
