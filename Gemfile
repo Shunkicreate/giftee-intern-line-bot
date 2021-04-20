@@ -30,7 +30,7 @@ gem 'spring',        group: :development
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-gem 'puma', '~>4.3.6'
+gem 'puma'
 
 gem 'line-bot-api'
 gem 'sinatra'
