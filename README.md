@@ -11,20 +11,17 @@ ruby 2.7.0p0 (2019-12-25 revision 647ee6f091) [x86_64-darwin19]
 $ bundle exec rails -v
 Rails 6.0.2.1
 ```
+# rails 環境構築
+[こちら](https://github.com/giftee/intern-line-bot/wiki/%E3%83%AD%E3%83%BC%E3%82%AB%E3%83%AB%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89) を参考にローカルで rails アプリケーションが動くようにする
 
 # Webhook環境の構築
-1. リポジトリをクローンする。
-```
-git clone git@github.com:giftee/intern-line-bot.git
-```
-
-2. Herokuにログインする。
+1. Herokuにログインする。
 ```
 $ heroku login
 heroku: Press any key to open up the browser to login or q to exit:
 ```
 
-3. heroku上にアプリを作成する。
+2. heroku上にアプリを作成する。
 ```
 $ heroku create
 Creating app... done, ⬢ XXXXX    // XXXXX はランダムな文字列が生成される。
@@ -33,21 +30,21 @@ https://XXXXX.herokuapp.com/ | https://git.heroku.com/XXXXX.git
 $ git remote -v
 heroku	https://git.heroku.com/XXXXX.git (fetch)
 heroku	https://git.heroku.com/XXXXX.git (push)
-origin	git@github.com:giftee/intern-line-bot.git (fetch)
-origin	git@github.com:giftee/intern-line-bot.git (push)
+origin	git@github.com:{user name}/intern-line-bot.git (fetch)
+origin	git@github.com:{user name}/intern-line-bot.git (push)
 ```
 
-4. herokuに資源をデプロイする。
+3. herokuに資源をデプロイする。
 ```
 $ git push heroku master
 ```
 
-5. heroku上にアプリが公開されたか確認する。
+4. heroku上にアプリが公開されたか確認する。
 ```
 $ heroku open
 ```
 
-6. LINE Messaging APIにアクセスするためのシークレット情報を登録する。
+5. LINE Messaging APIにアクセスするためのシークレット情報を登録する。
 LINE developer コンソールのChannel基本設定から「Channel Secret」と「アクセストークン」を取得し、以下の通り設定する。
 ```
 $ heroku config:set LINE_CHANNEL_SECRET=*****
@@ -76,5 +73,3 @@ $ heroku logs --tail
 $ git push heroku feature/xxxxx:master -f
 ```
 
-# 参考
-ローカル環境構築は[こちら](https://github.com/giftee/intern-line-bot/wiki/%E3%83%AD%E3%83%BC%E3%82%AB%E3%83%AB%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89)
