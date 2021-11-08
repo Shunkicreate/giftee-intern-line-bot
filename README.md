@@ -6,7 +6,7 @@
 # 環境
 ```
 $ ruby -v
-ruby 2.7.0p0 (2019-12-25 revision 647ee6f091) [x86_64-darwin19]
+ruby 2.7.2p137 (2020-10-01 revision 5445e04352) [x86_64-darwin18]
 
 $ bundle exec rails -v
 Rails 6.0.2.1
