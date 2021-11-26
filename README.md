@@ -73,3 +73,5 @@ $ heroku logs --tail
 $ git push heroku feature/xxxxx:master -f
 ```
 
+## Q. LINE Messaging APIの動作確認をローカル環境でできますか？
+A. ngrokというツールを使うとできます
