@@ -104,6 +104,7 @@ GEM
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     pg (0.21.0)
+    psych (3.3.4)
     puma (6.0.0)
       nio4r (~> 2.0)
     racc (1.6.0)
@@ -200,6 +201,7 @@ DEPENDENCIES
   line-bot-api
   listen
   pg (~> 0.18)
+  psych (< 4)
   puma
   rails (~> 6.0.2)
   rails_12factor
