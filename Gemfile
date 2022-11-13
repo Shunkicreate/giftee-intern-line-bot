@@ -48,3 +48,8 @@ gem 'listen', group: :development
 # TODO: rails upgrade 後に削除
 # https://qiita.com/kandalog/items/8fd20f79ecf73034795a
 gem 'psych', '< 4'
+# TODO: rails を v7 系にあげたら削除
+# https://github.com/rails/rails/pull/42366
+gem 'net-smtp', require: false
+gem 'net-imap', require: false
+gem 'net-pop', require: false
