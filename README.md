@@ -1,6 +1,5 @@
 # 前提
-- [Heroku](https://jp.heroku.com/) のアカウントを取得済みであること。
-- Herokuの[CLIツール](https://devcenter.heroku.com/articles/getting-started-with-ruby#set-up)がインストール済みであること。
+- [render](https://render.com/) のアカウントを取得済みであること。
 - [LINE Developer](https://developers.line.me/ja/) 登録が完了し、プロバイダー・channelの作成が完了していること。
 
 # 環境
@@ -14,64 +13,65 @@ Rails 6.0.2.1
 # rails 環境構築
 [こちら](https://github.com/giftee/intern-line-bot/wiki/%E3%83%AD%E3%83%BC%E3%82%AB%E3%83%AB%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89) を参考にローカルで rails アプリケーションが動くようにする
 
-# Webhook環境の構築
-1. Herokuにログインする。
-```
-$ heroku login
-heroku: Press any key to open up the browser to login or q to exit:
+# デプロイ準備
+
+1. `puma.rb`を修正
+```rb
+workers ENV.fetch("WEB_CONCURRENCY") { 4 }
+preload_app!
 ```
 
-2. heroku上にアプリを作成する。
-```
-$ heroku create
-Creating app... done, ⬢ XXXXX    // XXXXX はランダムな文字列が生成される。
-https://XXXXX.herokuapp.com/ | https://git.heroku.com/XXXXX.git
-
-$ git remote -v
-heroku	https://git.heroku.com/XXXXX.git (fetch)
-heroku	https://git.heroku.com/XXXXX.git (push)
-origin	git@github.com:{user name}/intern-line-bot.git (fetch)
-origin	git@github.com:{user name}/intern-line-bot.git (push)
+2. `config/environments/production.rb`を修正
+```rb
+config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || ENV['RENDER'].present?
 ```
 
-3. herokuに資源をデプロイする。
-```
-$ git push heroku master
+3. renderでbuildするための設定ファイルを作成する
+- `bin`配下に`render-build.sh`を作成。
+- 中身は以下
+```rb
+#!/usr/bin/env bash
+# exit on error
+set -o errexit
+
+bundle install
+bundle exec rake assets:precompile
+bundle exec rake assets:clean
+bundle exec rake db:migrate
 ```
 
-4. heroku上にアプリが公開されたか確認する。
+4. 作成したbuildファイルに実行権限を付与
 ```
-$ heroku open
+chmod a+x bin/render-build.sh
 ```
 
-5. LINE Messaging APIにアクセスするためのシークレット情報を登録する。
-LINE developer コンソールのChannel基本設定から「Channel Secret」と「アクセストークン」を取得し、以下の通り設定する。
+5. railsのシークレットキーを発行する
 ```
-$ heroku config:set LINE_CHANNEL_SECRET=*****
-$ heroku config:set LINE_CHANNEL_TOKEN=*****
+bundle exec rake secret
 ```
+
+6. render上にアプリを作成する。
+- WebServicesを選択
+- 任意の名前と以下のBuildCommand/StartCommandを入力
+  - BuildCommand: `./bin/render-build.sh`
+  - StartCommand: `bundle exec puma -C config/puma.rb`
+
+- 環境変数を設定する
+  - (key)
+  - LINE_CHANNEL_SECRET(LINE developer コンソールのChannel基本設定から取得)
+  - LINE_CHANNEL_TOKEN(LINE developer コンソールのChannel基本設定から取得)
+  - SECRET_KEY_BASE(bundle exec rake secretで生成したもの)
 
 # LINE Developerコンソールの設定
 LINE DeveloperコンソールのChannel基本設定から、以下を設定。
 
 - Webhook送信: 利用する
-- Webhook URL: https://XXXXX.herokuapp.com/callback
+- Webhook URL: `https://XXXXXXXXXXX.onrender.com`
 - Botのグループトーク参加: 利用する
 - 自動応答メッセージ: 利用しない
 - 友だち追加時あいさつ: 利用する
 
-※Webhook URLの `https://XXXXX.herokuapp.com` には `heroku create` で生成されたURLを指定する。Webhook URLを設定した後に接続確認ボタンを押して成功したら疎通完了。
-
-# Q&A
-## Q. herokuのログが見たい
-```
-$ heroku logs --tail
-```
-
-## Q. masterブランチ以外をherokuにデプロイしたい
-```
-$ git push heroku feature/xxxxx:master -f
-```
+※Webhook URLの `https://XXXXXXXXXXX.onrender.com` には renderで作成したサービスのダッシュボード上部に記載されているURLを入力。Webhook URLを設定した後に接続確認ボタンを押して成功したら疎通完了。
 
 ## Q. LINE Messaging APIの動作確認をローカル環境でできますか？
 A. [ngrok](https://ngrok.com/)というツールを使うとできます
