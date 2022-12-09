@@ -24,11 +24,11 @@ bundle exec rake secret
 - 自身のgithubアカウントでログイン(推奨)
 
 3. render上でデータベースを作成する
-- New+ ボタンからPostgresを選択
+- New+ ボタンからPostgreSQLを選択
 - 任意の名前を入力
 
 4. render上でアプリサーバーを作成する。
-- WebServicesを選択
+- Web Serviceを選択
 - githubログインしない場合は、webサービス作成画面にてgithubアカウントを`connect`する。
 - intern-line-botのリポジトリを選択する。
 - サービス名を入力
@@ -40,7 +40,7 @@ bundle exec rake secret
 - 環境変数を設定する
   - WebService作成画面の下部にある`Advanced`ボタンを押す
     - (key)
-    - DATABASE_URL(render上で作成したpostgresのダッシュボードからInternal Database URLを取得)
+    - DATABASE_URL(render上で作成したPostgreSQLのダッシュボードからInternal Database URLを取得)
     - LINE_CHANNEL_SECRET(LINE developer コンソールのChannel基本設定から取得)
     - LINE_CHANNEL_TOKEN(LINE developer コンソールのChannel基本設定から取得)
     - SECRET_KEY_BASE(bundle exec rake secretで生成したもの)
@@ -58,5 +58,3 @@ LINE DeveloperコンソールのChannel基本設定から、以下を設定。
 
 ## Q. LINE Messaging APIの動作確認をローカル環境でできますか？
 A. [ngrok](https://ngrok.com/)というツールを使うとできます
-
-
