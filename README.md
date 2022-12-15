@@ -1,6 +1,6 @@
 # 前提
 - [render](https://render.com/) のアカウントを取得済みであること。
-- [LINE Developer](https://developers.line.me/ja/) 登録が完了し、プロバイダー・channelの作成が完了していること。
+- [LINE Developer](https://developers.line.me/ja/) 登録が完了し、「プロバイダー」と「Messaging API チャネル」の作成が完了していること。
 
 # 環境
 ```
