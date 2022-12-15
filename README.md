@@ -30,7 +30,8 @@ bundle exec rake secret
 4. render上でアプリサーバーを作成する。
 - Web Serviceを選択
 - githubログインしない場合は、webサービス作成画面にてgithubアカウントを`connect`する。
-- intern-line-botのリポジトリを選択する。
+- 自分の line bot のリポジトリを選択する。
+  - `intern-line-bot` という名前のリポジトリは、インターン全員のためのテンプレリポジトリなので、間違えて選ばないように注意すること！
 - サービス名を入力
 - pushしたいブランチを選択
 - 以下のBuildCommand/StartCommandを入力
