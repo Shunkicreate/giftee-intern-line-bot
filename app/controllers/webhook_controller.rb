@@ -2,7 +2,7 @@ require 'line/bot'
 
 class WebhookController < ApplicationController
   protect_from_forgery except: [:callback] # CSRF対策無効化
-  
+
   public
   
   def client
@@ -55,15 +55,9 @@ class WebhookController < ApplicationController
     "https://www.lifehacker.jp/",
   ]
 
-  def select_one_from_url_list(str_list)
-    length = str_list.length
-    idx = rand(length)
-    str_list[idx]
-  end
-
   def make_return_message(sended_message)
     if sended_message == 'ニュース' then
-      selected_url = select_one_from_url_list(DEFAULT_URLS)
+      selected_url = DEFAULT_URLS.sample
       intro_of_message = "こちらはどうでしょうか\n"
       all_message = intro_of_message + selected_url
     else
