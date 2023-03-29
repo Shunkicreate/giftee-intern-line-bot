@@ -20,10 +20,15 @@ class WebhookController < ApplicationController
 
   private :select_one_from_url_list
 
-  def make_return_message()
-    selected_url = select_one_from_url_list(DEFAULT_URLS)
-    intro_of_message = "こちらはどうでしょうか\n"
-    all_message = intro_of_message + selected_url
+  def make_return_message(sended_message)
+    if sended_message == 'ニュース' then
+      selected_url = select_one_from_url_list(DEFAULT_URLS)
+      intro_of_message = "こちらはどうでしょうか\n"
+      all_message = intro_of_message + selected_url
+    else
+      all_message = "ニュースと言っていただくとおすすめのニュースサイトを紹介できます。"
+    end
+    all_message
   end
 
   private :make_return_message
@@ -49,7 +54,7 @@ class WebhookController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
-          message_text = make_return_message()
+          message_text = make_return_message(event.message['text'])
           puts "message text" 
           puts message_text
           message = {
