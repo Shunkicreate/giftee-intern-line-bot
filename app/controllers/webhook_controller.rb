@@ -3,6 +3,31 @@ require 'line/bot'
 class WebhookController < ApplicationController
   protect_from_forgery except: [:callback] # CSRF対策無効化
 
+  DEFAULT_URLS = [
+    "https://news.yahoo.co.jp/",
+    "https://news.google.com/home?hl=ja&gl=JP&ceid=JP:ja",
+    "https://www.cnn.co.jp/",
+    "https://giftee.com/announcements/specials",
+    "https://toyokeizai.net/",
+    "https://www.lifehacker.jp/",
+  ]
+
+  def select_one_from_url_list(str_list)
+    length = str_list.length
+    idx = rand(length)
+    str_list[idx]
+  end
+
+  private :select_one_from_url_list
+
+  def make_return_message()
+    selected_url = select_one_from_url_list(DEFAULT_URLS)
+    intro_of_message = "こちらはどうでしょうか\n"
+    all_message = intro_of_message + selected_url
+  end
+
+  private :make_return_message
+
   def client
     @client ||= Line::Bot::Client.new { |config|
       config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
@@ -24,9 +49,12 @@ class WebhookController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
+          message_text = make_return_message()
+          puts "message text" 
+          puts message_text
           message = {
             type: 'text',
-            text: event.message['text']
+            text: message_text
           }
           client.reply_message(event['replyToken'], message)
         when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
