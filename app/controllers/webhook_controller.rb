@@ -54,7 +54,7 @@ class WebhookController < ApplicationController
   ]
 
   def make_return_message(sended_message)
-    if sended_message == 'ニュース' then
+    if sended_message == 'ニュース'
       selected_url = DEFAULT_URLS.sample
       intro_message = "こちらはどうでしょうか\n"
       all_message = intro_message + selected_url
