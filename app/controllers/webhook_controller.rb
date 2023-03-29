@@ -27,8 +27,6 @@ class WebhookController < ApplicationController
         case event.type
         when Line::Bot::Event::MessageType::Text
           message_text = make_return_message(event.message['text'])
-          puts "message text" 
-          puts message_text
           message = {
             type: 'text',
             text: message_text
