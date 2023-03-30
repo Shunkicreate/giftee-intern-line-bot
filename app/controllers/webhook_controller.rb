@@ -64,7 +64,6 @@ class WebhookController < ApplicationController
   def pop_random_from_list(default_list, num = 1)
     poped_items = []
     poped_list = default_list
-    p default_list.shuffle
     for i in 1..num do
       poped_items.push(poped_list.shuffle.pop)
       poped_list = poped_list.shuffle
@@ -82,6 +81,7 @@ class WebhookController < ApplicationController
         response_message += rss_to_text(google_news_rss)
       end
     end
+    response_message
   end
 
   def get_google_rss(sended_message, num = 1)
