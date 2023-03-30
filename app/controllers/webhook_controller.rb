@@ -87,8 +87,8 @@ class WebhookController < ApplicationController
   end
 
   def get_google_rss(sended_message, num = 1)
-    query = URI.encode_www_form_component("#{sended_message}ANDワクワクORわくわく")
-    url = "https://news.google.com/rss/search?q=#{query}&hl=ja&gl=JP&ceid=JP:ja"
+    params = URI.encode_www_form({q:"#{sended_message}AND(ワクワクORわくわく)",hl:"ja",gl:"JP",ceid:"JP:ja"})
+    url = "https://news.google.com/rss/search?#{params}"
     rss = RSS::Parser.parse(url)
     google_news_list = pop_random_from_list(rss.items)
   end
