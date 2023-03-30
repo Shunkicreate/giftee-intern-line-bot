@@ -36,7 +36,7 @@ class WebhookController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           message = {
             type: 'text',
-            text: make_return_message(event.message['text'])
+            text: make_response_message(event.message['text'])
           }
           client.reply_message(event['replyToken'], message)
         when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
@@ -51,14 +51,14 @@ class WebhookController < ApplicationController
 
   private
 
-  def make_return_message(sended_message)
+  def make_response_message(sended_message)
     if sended_message == 'ニュース'
       selected_url = DEFAULT_URLS.sample
       intro_message = "こちらはどうでしょうか\n"
-      all_message = intro_message + selected_url
+      response_message = intro_message + selected_url
     else
-      all_message = "ニュースと言っていただくとおすすめのニュースサイトを紹介できます。"
+      response_message = "ニュースと言っていただくとおすすめのニュースサイトを紹介できます。"
     end
-    all_message
+    response_message
   end
 end
