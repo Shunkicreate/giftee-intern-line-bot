@@ -52,13 +52,11 @@ class WebhookController < ApplicationController
   private
 
   def make_response_message(sended_message)
-    google_news_list = get_google_rss
-    if sended_message == 'ニュース'
-      selected_url = DEFAULT_URLS.sample
-      intro_message = "こちらはどうでしょうか\n"
-      response_message = intro_message + selected_url
+    intro_message = "こちらはどうでしょうか\n\n"
+    if(false) #Step3で実装する予約後が入っていた場合の処理
+      p "今回は何もしません"
     else
-      response_message = "ニュースと言っていただくとおすすめのニュースサイトを紹介できます。"
+      response_message = get_google_response_message(intro_message, sended_message)
     end
     response_message
   end
@@ -74,9 +72,29 @@ class WebhookController < ApplicationController
     poped_items
   end
 
-  def get_google_rss(num = 1)
-    url = "https://news.google.com/rss/search?q=%E3%83%AF%E3%82%AF%E3%83%AF%E3%82%AFOR%E3%82%8F%E3%81%8F%E3%82%8F%E3%81%8F&hl=ja&gl=JP&ceid=JP:ja"
+  def get_google_response_message(intro_message, sended_message, num = 1)
+    response_message = intro_message
+    google_news_rss_list = get_google_rss(sended_message)
+    if google_news_rss_list == [nil]
+      response_message = "他の言葉をお試しください。"
+    else
+      for google_news_rss in google_news_rss_list do
+        response_message += rss_to_text(google_news_rss)
+      end
+    end
+  end
+
+  def get_google_rss(sended_message, num = 1)
+    query = URI.encode_www_form_component("#{sended_message}ANDワクワクORわくわく")
+    url = "https://news.google.com/rss/search?q=#{query}&hl=ja&gl=JP&ceid=JP:ja"
     rss = RSS::Parser.parse(url)
     google_news_list = pop_random_from_list(rss.items)
   end
+
+  def rss_to_text(rss)
+    text = ""
+    text += rss.title + "¥n"
+    text += rss.description + "¥n"
+  end
+
 end
