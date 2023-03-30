@@ -52,6 +52,7 @@ class WebhookController < ApplicationController
   private
 
   def make_response_message(sended_message)
+    google_news_list = get_google_rss
     if sended_message == 'ニュース'
       selected_url = DEFAULT_URLS.sample
       intro_message = "こちらはどうでしょうか\n"
@@ -62,18 +63,20 @@ class WebhookController < ApplicationController
     response_message
   end
 
-  def get_google_rss()
-    url = "https://news.google.com/rss/search?q=%E3%83%AF%E3%82%AF%E3%83%AF%E3%82%AFOR%E3%82%8F%E3%81%8F%E3%82%8F%E3%81%8FOR%E3%83%98%E3%83%AB%E3%82%B9%E3%82%B1%E3%82%A2&hl=ja&gl=JP&ceid=JP:ja"
-    rss = RSS::Parser.parse(url)
-    binding.irb
-    puts "blog title:" + rss.channel.title
-    puts
-    rss.items.each do |item|
-      puts item.pubDate.strftime( "%Y/%m/%d" )
-      puts item.title
-      puts item.link
-      p item.description
-      puts
+  def pop_random_from_list(default_list, num = 1)
+    poped_items = []
+    poped_list = default_list
+    p default_list.shuffle
+    for i in 1..num do
+      poped_items.push(poped_list.shuffle.pop)
+      poped_list = poped_list.shuffle
     end
+    poped_items
+  end
+
+  def get_google_rss(num = 1)
+    url = "https://news.google.com/rss/search?q=%E3%83%AF%E3%82%AF%E3%83%AF%E3%82%AFOR%E3%82%8F%E3%81%8F%E3%82%8F%E3%81%8F&hl=ja&gl=JP&ceid=JP:ja"
+    rss = RSS::Parser.parse(url)
+    google_news_list = pop_random_from_list(rss.items)
   end
 end
