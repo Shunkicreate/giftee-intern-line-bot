@@ -95,11 +95,7 @@ class WebhookController < ApplicationController
     p rss
     text = ""
     text += rss.title + "\n\n"
-    text += get_text_from_html(rss.title, rss.description) + "\n"
-  end
-
-  def get_text_from_html(title, rss_text)
-    rss_text.gsub(/<\/?[^>]*./, "").gsub("\n", "").gsub("&nbsp;", "").gsub(title, "")
+    text += rss.link + "\n"
   end
 
 end
