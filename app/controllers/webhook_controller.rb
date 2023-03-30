@@ -57,8 +57,6 @@ class WebhookController < ApplicationController
       selected_url = DEFAULT_URLS.sample
       intro_message = "こちらはどうでしょうか\n"
       response_message = intro_message + selected_url
-    elsif(false) #Step3で実装する予約後が入っていた場合の処理
-      p "今回は何もしません"
     else
       response_message = get_google_response_message(intro_message, sended_message)
     end
