@@ -61,4 +61,19 @@ class WebhookController < ApplicationController
     end
     response_message
   end
+
+  def get_google_rss()
+    url = "https://news.google.com/rss/search?q=%E3%83%AF%E3%82%AF%E3%83%AF%E3%82%AFOR%E3%82%8F%E3%81%8F%E3%82%8F%E3%81%8FOR%E3%83%98%E3%83%AB%E3%82%B9%E3%82%B1%E3%82%A2&hl=ja&gl=JP&ceid=JP:ja"
+    rss = RSS::Parser.parse(url)
+    binding.irb
+    puts "blog title:" + rss.channel.title
+    puts
+    rss.items.each do |item|
+      puts item.pubDate.strftime( "%Y/%m/%d" )
+      puts item.title
+      puts item.link
+      p item.description
+      puts
+    end
+  end
 end
