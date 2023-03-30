@@ -3,8 +3,6 @@ require 'line/bot'
 class WebhookController < ApplicationController
   protect_from_forgery except: [:callback] # CSRF対策無効化
 
-  public
-  
   def client
     @client ||= Line::Bot::Client.new { |config|
       config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
