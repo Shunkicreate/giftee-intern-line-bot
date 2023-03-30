@@ -1,6 +1,16 @@
 require 'line/bot'
 
 class WebhookController < ApplicationController
+
+    DEFAULT_URLS = [
+      "https://news.yahoo.co.jp/",
+      "https://news.google.com/home?hl=ja&gl=JP&ceid=JP:ja",
+      "https://www.cnn.co.jp/",
+      "https://giftee.com/announcements/specials",
+      "https://toyokeizai.net/",
+      "https://www.lifehacker.jp/",
+    ]
+
   protect_from_forgery except: [:callback] # CSRF対策無効化
 
   def client
@@ -26,7 +36,7 @@ class WebhookController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           message = {
             type: 'text',
-            text: event.message['text']
+            text: make_response_message(event.message['text'])
           }
           client.reply_message(event['replyToken'], message)
         when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
@@ -37,5 +47,18 @@ class WebhookController < ApplicationController
       end
     }
     head :ok
+  end
+
+  private
+
+  def make_response_message(sended_message)
+    if sended_message == 'ニュース'
+      selected_url = DEFAULT_URLS.sample
+      intro_message = "こちらはどうでしょうか\n"
+      response_message = intro_message + selected_url
+    else
+      response_message = "ニュースと言っていただくとおすすめのニュースサイトを紹介できます。"
+    end
+    response_message
   end
 end
