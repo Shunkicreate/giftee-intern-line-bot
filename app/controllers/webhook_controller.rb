@@ -36,7 +36,8 @@ class WebhookController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           message = {
             type: 'text',
-            text: make_response_message(event.message['text'])
+            text: make_response_message(event.message['text']),
+            quickReply: make_quick_reply
           }
           client.reply_message(event['replyToken'], message)
         when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
@@ -84,6 +85,37 @@ class WebhookController < ApplicationController
 
   def rss_item_to_text(rss_item)
     text = "#{rss_item.title}\n#{rss_item.link}\n"
+  end
+
+  def make_quick_reply
+    quick_reply = {
+      "items": [
+        {
+          "type": "action",
+          "action": {
+            "type": "message",
+            "label": "ニュース",
+            "text": "ニュースサイト"
+          }
+        },
+        {
+          "type": "action",
+          "action": {
+            "type": "message",
+            "label": "ギフティ",
+            "text": "ギフティ"
+          }
+        },
+        {
+          "type": "message",
+          "action": {
+            "type": "message",
+            "label": "キティ",
+            "text": "キティ"
+          }
+        }
+      ]
+    }
   end
 
 end
