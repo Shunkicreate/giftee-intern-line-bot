@@ -87,7 +87,7 @@ class WebhookController < ApplicationController
     text = "#{rss_item.title}\n#{rss_item.link}\n"
   end
 
-  def make_quick_reply()
+  def make_quick_reply
     quick_reply = {
       "items": [
         {
