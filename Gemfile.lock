@@ -161,6 +161,9 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rdoc (6.3.3)
+    rexml (3.2.5)
+    rss (0.2.9)
+      rexml
     ruby2_keywords (0.0.5)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
@@ -222,6 +225,7 @@ DEPENDENCIES
   puma
   rails (~> 6.0.2)
   rails_12factor
+  rss
   sass-rails
   sdoc
   sinatra
