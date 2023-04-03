@@ -51,14 +51,13 @@ class WebhookController < ApplicationController
 
   private
 
-  def make_response_message(sended_message)
-    intro_message = "こちらはどうでしょうか\n\n"
-    if sended_message == 'ニュースサイト'
+  def make_response_message(recieved_message)
+    intro_message = "こちらはどうでしょうか\n"
+    if recieved_message == 'ニュースサイト'
       selected_url = DEFAULT_URLS.sample
-      intro_message = "こちらはどうでしょうか\n"
       response_message = intro_message + selected_url
     else
-      response_message = get_google_response_message(intro_message, sended_message)
+      response_message = get_google_response_message(intro_message, recieved_message)
     end
     response_message
   end
@@ -73,9 +72,9 @@ class WebhookController < ApplicationController
     poped_items
   end
 
-  def get_google_response_message(intro_message, sended_message, num = 1)
+  def get_google_response_message(intro_message, recieved_message, num = 1)
     response_message = intro_message
-    google_news_rss_list = get_google_rss_items(sended_message)
+    google_news_rss_list = get_google_rss_items(recieved_message)
     if google_news_rss_list == [nil]
       response_message = "他の言葉をお試しください。"
     else
@@ -86,8 +85,8 @@ class WebhookController < ApplicationController
     response_message
   end
 
-  def get_google_rss_items(sended_message, num = 1)
-    params = URI.encode_www_form({q:"#{sended_message}AND(ワクワクORわくわく)",hl:"ja",gl:"JP",ceid:"JP:ja"})
+  def get_google_rss_items(recieved_message, num = 1)
+    params = URI.encode_www_form({q:"#{recieved_message}AND(ワクワクORわくわく)",hl:"ja",gl:"JP",ceid:"JP:ja"})
     url = "https://news.google.com/rss/search?#{params}"
     rss = RSS::Parser.parse(url)
     google_news_list = pop_random_from_list(rss.items)
