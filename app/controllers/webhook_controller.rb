@@ -65,7 +65,7 @@ class WebhookController < ApplicationController
   def get_google_response_message(intro_message, recieved_message, num = 1)
     response_message = intro_message
     google_news_rss_list = get_google_rss_items(recieved_message, num)
-    if google_news_rss_list == [nil]
+    if google_news_rss_list.empty?
       response_message = "他の言葉をお試しください。"
     else
       for google_news_rss in google_news_rss_list do
