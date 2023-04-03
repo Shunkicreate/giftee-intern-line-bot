@@ -94,8 +94,7 @@ class WebhookController < ApplicationController
   end
 
   def rss_item_to_text(rss_item)
-    text = rss_item.title + "\n\n"
-    text += rss_item.link + "\n"
+    text = "#{rss_item.title}\n\n#{rss_item.link}"
   end
 
 end
