@@ -1,7 +1,7 @@
 require 'line/bot'
 
 class WebhookController < ApplicationController
-
+#modelにあるデータからほしいものを出す。そしてviewにデータを渡す。もしくはmodelに対する操作を行うCURD。
     DEFAULT_URLS = [
       "https://news.yahoo.co.jp/",
       "https://news.google.com/home?hl=ja&gl=JP&ceid=JP:ja",
