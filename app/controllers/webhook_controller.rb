@@ -75,27 +75,27 @@ class WebhookController < ApplicationController
 
   def get_google_response_message(intro_message, sended_message, num = 1)
     response_message = intro_message
-    google_news_rss_list = get_google_rss(sended_message)
+    google_news_rss_list = get_google_rss_items(sended_message)
     if google_news_rss_list == [nil]
       response_message = "他の言葉をお試しください。"
     else
       for google_news_rss in google_news_rss_list do
-        response_message += rss_to_text(google_news_rss)
+        response_message += rss_item_to_text(google_news_rss)
       end
     end
     response_message
   end
 
-  def get_google_rss(sended_message, num = 1)
+  def get_google_rss_items(sended_message, num = 1)
     params = URI.encode_www_form({q:"#{sended_message}AND(ワクワクORわくわく)",hl:"ja",gl:"JP",ceid:"JP:ja"})
     url = "https://news.google.com/rss/search?#{params}"
     rss = RSS::Parser.parse(url)
     google_news_list = pop_random_from_list(rss.items)
   end
 
-  def rss_to_text(rss)
-    text = rss.title + "\n\n"
-    text += rss.link + "\n"
+  def rss_item_to_text(rss_item)
+    text = rss_item.title + "\n\n"
+    text += rss_item.link + "\n"
   end
 
 end
